@@ -8,11 +8,13 @@ const port = process.env.PORT || 3001;
 const noticiasRouter = require('./routes/noticias');
 const usuariosRouter = require('./routes/usuarios');
 const videosRouter = require('./routes/videos');
+const slidesRouter = require('./routes/slides');
 
 app.use(express.json());
 app.use('/noticias', noticiasRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/videos', videosRouter);
+app.use('/slides', slidesRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World from Express');
