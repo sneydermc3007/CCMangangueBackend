@@ -29,9 +29,9 @@ const Noticia = sequelize.define('Noticia', {
   }
 }, {
   tableName: 'Noticias',
-  timestamps: true,  // Activa el manejo automático de createdAt y updatedAt
-  createdAt: 'created_at',  // Renombra createdAt a created_at
-  updatedAt: 'updated_at'   // Renombra updatedAt a updated_at
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Noticia;

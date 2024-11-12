@@ -4,9 +4,13 @@ require('dotenv').config({ path: './env/.env' });
 
 const app = express();
 const port = process.env.PORT || 3001;
-const noticiasRouter = require('./routes/noticias');
 
+const noticiasRouter = require('./routes/noticias');
+const usuariosRouter = require('./routes/usuarios');
+
+app.use(express.json());
 app.use('/noticias', noticiasRouter);
+app.use('/usuarios', usuariosRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello World from Express');
