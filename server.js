@@ -9,12 +9,15 @@ const noticiasRouter = require('./routes/noticias');
 const usuariosRouter = require('./routes/usuarios');
 const videosRouter = require('./routes/videos');
 const slidesRouter = require('./routes/slides');
+const eventosCalendarioRouter = require('./routes/eventosCalendario');
 
 app.use(express.json());
 app.use('/noticias', noticiasRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/videos', videosRouter);
 app.use('/slides', slidesRouter);
+app.use('/eventos', eventosCalendarioRouter);
+
 
 app.get('/', (req, res) => {
   res.send('Hello World from Express');
