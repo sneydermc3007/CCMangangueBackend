@@ -10,6 +10,7 @@ const usuariosRouter = require('./routes/usuarios');
 const videosRouter = require('./routes/videos');
 const slidesRouter = require('./routes/slides');
 const eventosCalendarioRouter = require('./routes/eventosCalendario');
+const decretoRouter = require('./routes/decretos');
 
 app.use(express.json());
 app.use('/noticias', noticiasRouter);
@@ -17,6 +18,7 @@ app.use('/usuarios', usuariosRouter);
 app.use('/videos', videosRouter);
 app.use('/slides', slidesRouter);
 app.use('/eventos', eventosCalendarioRouter);
+app.use('/decretos', decretoRouter);
 
 
 app.get('/', (req, res) => {
