@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const sequelize = require('./config/database');
 require('dotenv').config({ path: './env/.env' });
 
@@ -11,6 +12,12 @@ const videosRouter = require('./routes/videos');
 const slidesRouter = require('./routes/slides');
 const eventosCalendarioRouter = require('./routes/eventosCalendario');
 const decretoRouter = require('./routes/decretos');
+
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 app.use('/noticias', noticiasRouter);
