@@ -2,11 +2,12 @@ const Noticia = require('./../models/Noticia');
 
 const crearNoticia = async (req, res) => {
   try {
-    const { nombre, descripcion, estado, fecha_publicacion, imagen_url, contenido } = req.body;
+    const { nombre, descripcion, estado, tipo, fecha_publicacion, imagen_url, contenido } = req.body;
     const noticia = await Noticia.create({
       nombre,
       descripcion,
       estado,
+      tipo,
       fecha_publicacion,
       imagen_url,
       contenido
@@ -20,7 +21,9 @@ const crearNoticia = async (req, res) => {
 
 const obtenerNoticias = async (req, res) => {
   try {
-    const noticias = await Noticia.findAll();
+    const { tipo } = req.query;
+    const whereClause = tipo ? { tipo } : {};
+    const noticias = await Noticia.findAll({ where: whereClause });
     res.json(noticias);
   } catch (error) {
     console.error('Error al obtener las noticias:', error);
@@ -45,13 +48,14 @@ const obtenerNoticiaPorId = async (req, res) => {
 const actualizarNoticia = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, descripcion, estado, fecha_publicacion, imagen_url, contenido } = req.body;
+    const { nombre, descripcion, estado, tipo, fecha_publicacion, imagen_url, contenido } = req.body;
 
     const noticia = await Noticia.findByPk(id);
     if (noticia) {
       noticia.nombre = nombre || noticia.nombre;
       noticia.descripcion = descripcion || noticia.descripcion;
       noticia.estado = estado || noticia.estado;
+      noticia.tipo = tipo || noticia.tipo;
       noticia.fecha_publicacion = fecha_publicacion || noticia.fecha_publicacion;
       noticia.imagen_url = imagen_url || noticia.imagen_url;
       noticia.contenido = contenido || noticia.contenido;
