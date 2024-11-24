@@ -4,22 +4,21 @@ const Pagina = require('../models/Pagina');
 module.exports = {
   async createSlide(req, res) {
     try {
-      const { link, tipo_link, posicion, estado } = req.body;
+      const { link, tipo_link, posicion, estado, portada_url } = req.body;
       let pagina_id = null;
 
-      // Si es un link interno, creamos una nueva página
       if (tipo_link === 'interno') {
         const nuevaPagina = await Pagina.create({ titulo: 'Nueva Página', tipo: 'slide' });
         pagina_id = nuevaPagina.id;
       }
 
-      // Crear el slide
       const nuevoSlide = await Slide.create({
         pagina_id,
         link,
         tipo_link,
         posicion,
-        estado
+        estado,
+        portada_url
       });
 
       res.status(201).json(nuevoSlide);
@@ -32,11 +31,16 @@ module.exports = {
   async getSlideById(req, res) {
     try {
       const { id } = req.params;
-      const slide = await Slide.findByPk(id, { include: { model: Pagina, as: 'pagina' } });
+      const slide = await Slide.findByPk(id, { include: { model: Pagina, as: 'pagina', required: false } });
 
-      if (!slide) {
+      if (!slide)
         return res.status(404).json({ error: 'Slide no encontrado' });
-      }
+
+      if (slide.tipo_link === 'interno')
+        slide.setDataValue('link', null);
+
+      if (slide.tipo_link === 'externo')
+        slide.setDataValue('pagina', null);
 
       res.json(slide);
     } catch (error) {
@@ -47,11 +51,19 @@ module.exports = {
 
   async getAllSlides(req, res) {
     try {
-      const slides = await Slide.findAll({ include: { model: Pagina, as: 'pagina' } });
+      const slides = await Slide.findAll({ include: { model: Pagina, as: 'pagina', required: false } });
       
-      if (!slides || slides.length === 0) {
-        return res.status(404).json({ error: 'No se encontraron slides' });
-      }
+      if (!slides || slides.length === 0)
+        return res.status(204).json();
+
+      slides.forEach((slide) => {
+
+        if (slide.tipo_link === 'interno')
+          slide.setDataValue('link', null);
+
+        if (slide.tipo_link === 'externo')
+          slide.setDataValue('pagina', null);
+      });
 
       res.json(slides);
     } catch (error) {
@@ -63,7 +75,7 @@ module.exports = {
   async updateSlide(req, res) {
     try {
       const { id } = req.params;
-      const { link, tipo_link, posicion, estado } = req.body;
+      const { link, tipo_link, posicion, estado, portada_url } = req.body;
 
       const slide = await Slide.findByPk(id);
 
@@ -80,6 +92,7 @@ module.exports = {
       slide.tipo_link = tipo_link;
       slide.posicion = posicion;
       slide.estado = estado;
+      slide.portada_url = portada_url;
 
       await slide.save();
 

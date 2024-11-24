@@ -4,8 +4,8 @@ const sequelize = require('../config/database');
 const Pagina = sequelize.define('Pagina', {
   titulo: { type: DataTypes.STRING, allowNull: false },
   contenido: { type: DataTypes.TEXT },
-  imagen_url: { type: DataTypes.STRING },
-  imagen_extra_url: { type: DataTypes.STRING },
+  imagen_principal: { type: DataTypes.STRING, allowNull: true, validate: { isUrl: true } },
+  imagen_segundaria: { type: DataTypes.STRING, allowNull: true, validate: { isUrl: true } },
   tipo: { type: DataTypes.ENUM('slide', 'noticia'), allowNull: false }
 }, {
   tableName: 'Paginas',
