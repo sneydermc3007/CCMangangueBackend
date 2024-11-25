@@ -8,10 +8,10 @@ const {
   deleteDecreto 
 } = require('../controllers/decretosController');
 
-router.post('/decretos', createDecreto);
-router.get('/decretos/:id', getDecretoById);
+router.post('/crear', createDecreto);
+router.get('/:id', getDecretoById);
 router.get('/', getAllDecretos);
-router.put('/decretos/:id', updateDecreto);
-router.delete('/decretos/:id', deleteDecreto);
+router.put('/:id', updateDecreto);
+router.delete('/:id', deleteDecreto);
 
 module.exports = router;

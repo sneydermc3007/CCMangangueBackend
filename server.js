@@ -13,6 +13,7 @@ const slidesRouter = require('./routes/slides');
 const eventosCalendarioRouter = require('./routes/eventosCalendario');
 const decretoRouter = require('./routes/decretos');
 const paginasRouter = require('./routes/paginas');
+const acordeonRouter = require('./routes/acordeon');
 
 app.use(cors({
   origin: '*',
@@ -28,6 +29,7 @@ app.use('/slides', slidesRouter);
 app.use('/eventos', eventosCalendarioRouter);
 app.use('/decretos', decretoRouter);
 app.use('/paginas', paginasRouter);
+app.use('/acordeon', acordeonRouter);
 
 
 app.get('/', (req, res) => {
