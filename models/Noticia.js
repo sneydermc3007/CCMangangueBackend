@@ -19,7 +19,7 @@ const Noticia = sequelize.define('Noticia', {
     defaultValue: 'Pendiente'
   },
   tipo: {
-    type: DataTypes.ENUM('Principal', 'Secundaria'),
+    type: DataTypes.ENUM('Principal', 'Secundaria', 'Empresarial'),
     defaultValue: 'Secundaria'
   },
   fecha_publicacion: {

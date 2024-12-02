@@ -6,7 +6,7 @@ const { crearNoticia, obtenerNoticias, obtenerNoticiaPorId, actualizarNoticia, e
 
 router.get(
     '/',
-    [query('tipo').optional().isIn(['Principal', 'Secundaria']).withMessage('El tipo debe ser Principal o Secundaria')],
+    [query('tipo').optional().isIn(['Principal', 'Secundaria', 'Empresarial']).withMessage('El tipo debe ser Principal, Secundaria o Empresarial')],
     obtenerNoticias
 );
 
@@ -14,7 +14,7 @@ router.get('/:id', obtenerNoticiaPorId);
 
 router.post(
     '/crear',
-    [ body('tipo').optional().isIn(['Principal', 'Secundaria']).withMessage('El tipo debe ser Principal o Secundaria')],
+    [ body('tipo').optional().isIn(['Principal', 'Secundaria', 'Empresarial']).withMessage('El tipo debe ser Principal, Secundaria o Empresarial')],
     crearNoticia
 );
   
