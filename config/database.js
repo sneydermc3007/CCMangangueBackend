@@ -1,5 +1,4 @@
 const { Sequelize } = require('sequelize');
-
 require('dotenv').config({ path: './env/.env' });
 
 const sequelize = new Sequelize(
@@ -10,16 +9,22 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: 'mysql',
-    dialectOptions: { connectTimeout: 60000 }
+    dialectOptions: {
+      connectTimeout: 60000,
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
   }
 );
 
 const testConnection = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Conexión a la base de datos establecida correctamente.');
+    console.log('✅ Conexión a la base de datos establecida correctamente.');
   } catch (error) {
-    console.error('No se pudo conectar a la base de datos:', error);
+    console.error('❌ No se pudo conectar a la base de datos:', error);
   }
 };
 
